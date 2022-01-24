@@ -45,6 +45,8 @@ python test_worker.py
 ### Acknowledgements
 
 HDGan[Pytorch implementation](https://github.com/ypxie/HDGan)
+
 StakGAN [Pytorch implementation](https://github.com/hanzhanggit/StackGAN-v2)
+
 AttanGan[Pytorch implementation](https://github.com/taoxugit/AttnGAN)
 
