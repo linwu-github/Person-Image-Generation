@@ -1,0 +1,206 @@
+nohup: ignoring input
+/opt/caoshujian/stack_gan/code/miscc/config.py:101: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  yaml_cfg = edict(yaml.load(f))
+Using config:
+{'CONFIG_NAME': '3stages',
+ 'CUDA': True,
+ 'DATASET_NAME': 'CUHK',
+ 'DATA_DIR': 'D:/NEW_HDGAN/StackGAN-v2-master/data/birds',
+ 'EMBEDDING_TYPE': 'cnn-rnn',
+ 'GAN': {'B_CONDITION': True,
+         'DF_DIM': 64,
+         'EMBEDDING_DIM': 128,
+         'GF_DIM': 64,
+         'NETWORK_TYPE': 'default',
+         'R_NUM': 2,
+         'Z_DIM': 100},
+ 'GPU_ID': '0',
+ 'TEST': {'B_EXAMPLE': True, 'SAMPLE_NUM': 30000},
+ 'TEXT': {'DIMENSION': 768},
+ 'TRAIN': {'BATCH_SIZE': 24,
+           'COEFF': {'COLOR_LOSS': 0.0, 'KL': 2.0, 'UNCOND_LOSS': 1.0},
+           'DISCRIMINATOR_LR': 0.0002,
+           'FLAG': True,
+           'GENERATOR_LR': 0.0002,
+           'MAX_EPOCH': 600,
+           'NET_D': '',
+           'NET_G': '',
+           'SNAPSHOT_INTERVAL': 1000,
+           'VIS_COUNT': 64},
+ 'TREE': {'BASE_SIZE': 64,
+          'BASE_SIZE_1': 64,
+          'BASE_SIZE_2': 32,
+          'BRANCH_NUM': 3},
+ 'WORKERS': 4}
+/home/caoshujian/anaconda3/lib/python3.8/site-packages/torchvision/transforms/transforms.py:280: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+Load filenames from: /opt/caoshujian/HD_GAN/Data/train/train_files_1w.pickle (10000)
+DataParallel(
+  (module): G_NET(
+    (ca_net): CA_NET(
+      (fc): Linear(in_features=768, out_features=512, bias=True)
+      (relu): GLU()
+    )
+    (h_net1): INIT_STAGE_G(
+      (fc): Sequential(
+        (0): Linear(in_features=228, out_features=16384, bias=False)
+        (1): BatchNorm1d(16384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (upsample1): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample2): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample3): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample4): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net1): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+    (h_net2): NEXT_STAGE_G(
+      (jointConv): Sequential(
+        (0): Conv2d(192, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (residual): Sequential(
+        (0): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (upsample): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net2): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(32, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+    (h_net3): NEXT_STAGE_G(
+      (jointConv): Sequential(
+        (0): Conv2d(160, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (residual): Sequential(
+        (0): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (upsample): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net3): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(16, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+  )
+)
+# of netsD 3
+[0/600][416]
+                         Loss_D: 9.21 Loss_G: 14.83 Loss_KL: 0.80 Time: 78.68s
+                      
+[1/600][416]
+                         Loss_D: 5.85 Loss_G: 22.77 Loss_KL: 0.85 Time: 77.28s
+                      
+[2/600][416]
+                         Loss_D: 7.41 Loss_G: 15.37 Loss_KL: 1.13 Time: 77.79s
+                      
+[3/600][416]
+                         Loss_D: 7.38 Loss_G: 20.59 Loss_KL: 1.47 Time: 77.18s
+                      
+[4/600][416]
+                         Loss_D: 5.53 Loss_G: 28.92 Loss_KL: 1.56 Time: 77.65s
+                      
+[5/600][416]
+                         Loss_D: 7.80 Loss_G: 16.82 Loss_KL: 1.62 Time: 77.33s
+                      
+[6/600][416]
+                         Loss_D: 6.78 Loss_G: 20.32 Loss_KL: 1.97 Time: 77.20s
+                      
+[7/600][416]
+                         Loss_D: 5.68 Loss_G: 27.80 Loss_KL: 2.37 Time: 77.82s
+                      
+[8/600][416]
+                         Loss_D: 6.18 Loss_G: 35.19 Loss_KL: 2.12 Time: 77.18s
+                      
+[9/600][416]
+                         Loss_D: 6.26 Loss_G: 23.82 Loss_KL: 1.99 Time: 77.78s
+                      
+[10/600][416]
+                         Loss_D: 5.55 Loss_G: 29.46 Loss_KL: 2.56 Time: 77.32s
+                      
+[11/600][416]
+                         Loss_D: 4.05 Loss_G: 30.63 Loss_KL: 2.72 Time: 77.17s
+                      
+[12/600][416]
+                         Loss_D: 5.07 Loss_G: 29.83 Loss_KL: 3.44 Time: 77.82s
+                      
+[13/600][416]
+                         Loss_D: 5.40 Loss_G: 43.01 Loss_KL: 3.11 Time: 77.15s
+                      
+[14/600][416]
+                         Loss_D: 6.01 Loss_G: 31.94 Loss_KL: 2.68 Time: 77.76s
+                      

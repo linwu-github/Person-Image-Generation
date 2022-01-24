@@ -1,0 +1,93 @@
+nohup: ignoring input
+Using config:
+{'B_VALIDATION': False,
+ 'CONFIG_NAME': 'attn2',
+ 'CUDA': True,
+ 'DATASET_NAME': 'cuhk',
+ 'DATA_DIR': '../data/birds',
+ 'GAN': {'B_ATTENTION': True,
+         'B_DCGAN': False,
+         'CONDITION_DIM': 100,
+         'DF_DIM': 64,
+         'GF_DIM': 32,
+         'R_NUM': 2,
+         'Z_DIM': 100},
+ 'GPU_ID': 0,
+ 'RNN_TYPE': 'LSTM',
+ 'TEXT': {'CAPTIONS_PER_IMAGE': 2, 'EMBEDDING_DIM': 256, 'WORDS_NUM': 24},
+ 'TRAIN': {'BATCH_SIZE': 24,
+           'B_NET_D': True,
+           'DISCRIMINATOR_LR': 0.0002,
+           'ENCODER_LR': 0.0002,
+           'FLAG': True,
+           'GENERATOR_LR': 0.0002,
+           'MAX_EPOCH': 600,
+           'NET_E': '/opt/caoshujian/AttnGan/DAMSMencoders/text_encoder350.pth',
+           'NET_G': '',
+           'RNN_GRAD_CLIP': 0.25,
+           'SMOOTH': {'GAMMA1': 4.0,
+                      'GAMMA2': 5.0,
+                      'GAMMA3': 10.0,
+                      'LAMBDA': 5.0},
+           'SNAPSHOT_INTERVAL': 50},
+ 'TREE': {'BASE_SIZE': 64,
+          'BASE_SIZE_1': 64,
+          'BASE_SIZE_2': 32,
+          'BRANCH_NUM': 3},
+ 'WORKERS': 4}
+Load filenames from: /opt/caoshujian/AttnGan/data/CUHK-PEDES/train/train_files_1w.pickle (10000)
+Load filenames from: /opt/caoshujian/AttnGan/data/CUHK-PEDES/test/test_files.pickle (3074)
+Load from:  /opt/caoshujian/AttnGan/data/CUHK-PEDES/captions.pickle 55
+4411 2
+Load pretrained model from  https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth
+Load image encoder from: /opt/caoshujian/AttnGan/DAMSMencoders/image_encoder350.pth
+/home/caoshujian/anaconda3/envs/attngan/lib/python3.6/site-packages/torch/nn/modules/rnn.py:50: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.5 and num_layers=1
+  "num_layers={}".format(dropout, num_layers))
+Load text encoder from: /opt/caoshujian/AttnGan/DAMSMencoders/text_encoder350.pth
+# of netsD 3
+/pytorch/torch/csrc/utils/python_arg_parser.cpp:756: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha)
+errD0: 0.35 errD1: 0.26 errD2: 0.21 
+g_loss0: 10.13 g_loss1: 14.33 g_loss2: 14.69 w_loss: 37.65 s_loss: 35.54 kl_loss: 0.01 
+errD0: 0.11 errD1: 0.15 errD2: 0.06 
+g_loss0: 14.94 g_loss1: 9.03 g_loss2: 14.12 w_loss: 37.37 s_loss: 34.32 kl_loss: 0.01 
+errD0: 0.18 errD1: 0.32 errD2: 0.16 
+g_loss0: 9.42 g_loss1: 7.25 g_loss2: 9.15 w_loss: 34.67 s_loss: 32.55 kl_loss: 0.01 
+errD0: 0.16 errD1: 0.14 errD2: 0.05 
+g_loss0: 10.90 g_loss1: 9.13 g_loss2: 13.53 w_loss: 35.95 s_loss: 34.21 kl_loss: 0.01 
+[0/600][416]
+                  Loss_D: 0.27 Loss_G: 102.47 Time: 221.38s
+errD0: 0.21 errD1: 0.08 errD2: 0.19 
+g_loss0: 10.04 g_loss1: 14.19 g_loss2: 10.87 w_loss: 30.61 s_loss: 27.98 kl_loss: 0.01 
+errD0: 0.25 errD1: 0.27 errD2: 2.19 
+g_loss0: 10.74 g_loss1: 10.43 g_loss2: 2.38 w_loss: 29.57 s_loss: 29.08 kl_loss: 0.01 
+errD0: 0.05 errD1: 0.03 errD2: 0.41 
+g_loss0: 12.70 g_loss1: 13.16 g_loss2: 9.19 w_loss: 37.67 s_loss: 26.52 kl_loss: 0.01 
+errD0: 0.03 errD1: 0.06 errD2: 2.05 
+g_loss0: 11.64 g_loss1: 13.67 g_loss2: 2.34 w_loss: 28.96 s_loss: 28.55 kl_loss: 0.01 
+[1/600][416]
+                  Loss_D: 0.52 Loss_G: 98.14 Time: 218.72s
+errD0: 0.05 errD1: 0.08 errD2: 0.08 
+g_loss0: 9.72 g_loss1: 10.47 g_loss2: 9.87 w_loss: 30.38 s_loss: 28.06 kl_loss: 0.01 
+errD0: 0.13 errD1: 0.08 errD2: 0.29 
+g_loss0: 14.34 g_loss1: 10.48 g_loss2: 7.19 w_loss: 32.13 s_loss: 29.21 kl_loss: 0.02 
+Traceback (most recent call last):
+  File "main_cuhk.py", line 148, in <module>
+    algo.train()
+  File "/opt/caoshujian/AttnGan/code/trainer.py", line 327, in train
+    captions, cap_lens, epoch, name='average')
+  File "/opt/caoshujian/AttnGan/code/trainer.py", line 202, in save_img_results
+    attn_maps, att_sze, lr_imgs=lr_img)
+  File "/opt/caoshujian/AttnGan/code/miscc/utils.py", line 119, in build_super_images
+    drawCaption(text_convas, captions, ixtoword, vis_size)
+  File "/opt/caoshujian/AttnGan/code/miscc/utils.py", line 50, in drawCaption
+    fnt = ImageFont.truetype('arial.ttf', 50)
+  File "/home/caoshujian/anaconda3/envs/attngan/lib/python3.6/site-packages/PIL/ImageFont.py", line 855, in truetype
+    return freetype(font)
+  File "/home/caoshujian/anaconda3/envs/attngan/lib/python3.6/site-packages/PIL/ImageFont.py", line 852, in freetype
+    return FreeTypeFont(font, size, index, encoding, layout_engine)
+  File "/home/caoshujian/anaconda3/envs/attngan/lib/python3.6/site-packages/PIL/ImageFont.py", line 212, in __init__
+    font, size, index, encoding, layout_engine=layout_engine
+OSError: cannot open resource

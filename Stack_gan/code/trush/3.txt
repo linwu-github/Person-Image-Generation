@@ -1,0 +1,1239 @@
+nohup: ignoring input
+/opt/caoshujian/stack_gan/code/miscc/config.py:101: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  yaml_cfg = edict(yaml.load(f))
+Using config:
+{'CONFIG_NAME': '3stages',
+ 'CUDA': True,
+ 'DATASET_NAME': 'CUHK',
+ 'DATA_DIR': 'D:/NEW_HDGAN/StackGAN-v2-master/data/birds',
+ 'EMBEDDING_TYPE': 'cnn-rnn',
+ 'GAN': {'B_CONDITION': True,
+         'DF_DIM': 64,
+         'EMBEDDING_DIM': 128,
+         'GF_DIM': 64,
+         'NETWORK_TYPE': 'default',
+         'R_NUM': 2,
+         'Z_DIM': 100},
+ 'GPU_ID': '0',
+ 'TEST': {'B_EXAMPLE': True, 'SAMPLE_NUM': 30000},
+ 'TEXT': {'DIMENSION': 768},
+ 'TRAIN': {'BATCH_SIZE': 36,
+           'COEFF': {'COLOR_LOSS': 0.0, 'KL': 2.0, 'UNCOND_LOSS': 0.5},
+           'DISCRIMINATOR_LR': 0.0001,
+           'FLAG': True,
+           'GENERATOR_LR': 0.002,
+           'MAX_EPOCH': 600,
+           'NET_D': '',
+           'NET_G': '',
+           'SNAPSHOT_INTERVAL': 1000,
+           'VIS_COUNT': 64},
+ 'TREE': {'BASE_SIZE': 64,
+          'BASE_SIZE_1': 64,
+          'BASE_SIZE_2': 32,
+          'BRANCH_NUM': 3},
+ 'WORKERS': 4}
+/home/caoshujian/anaconda3/lib/python3.8/site-packages/torchvision/transforms/transforms.py:280: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
+  warnings.warn(
+Load filenames from: /opt/caoshujian/HD_GAN/Data/train/train_files_1w.pickle (10000)
+DataParallel(
+  (module): G_NET(
+    (ca_net): CA_NET(
+      (fc): Linear(in_features=768, out_features=512, bias=True)
+      (relu): GLU()
+    )
+    (h_net1): INIT_STAGE_G(
+      (fc): Sequential(
+        (0): Linear(in_features=228, out_features=16384, bias=False)
+        (1): BatchNorm1d(16384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (upsample1): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample2): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample3): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+      (upsample4): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net1): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+    (h_net2): NEXT_STAGE_G(
+      (jointConv): Sequential(
+        (0): Conv2d(192, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (residual): Sequential(
+        (0): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (upsample): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net2): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(32, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+    (h_net3): NEXT_STAGE_G(
+      (jointConv): Sequential(
+        (0): Conv2d(160, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): GLU()
+      )
+      (residual): Sequential(
+        (0): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): ResBlock(
+          (block): Sequential(
+            (0): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): GLU()
+            (3): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+            (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (upsample): Sequential(
+        (0): Interpolate()
+        (1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (3): GLU()
+      )
+    )
+    (img_net3): GET_IMAGE_G(
+      (img): Sequential(
+        (0): Conv2d(16, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): Tanh()
+      )
+    )
+  )
+)
+# of netsD 3
+[1/600][277] Loss_D: 7.12 Loss_G: 11.73 Loss_KL: 1.23 lr_g: 0.00200000 lr_d: 0.00010000 Time: 67.48s
+                                  
+[2/600][277] Loss_D: 8.76 Loss_G: 11.73 Loss_KL: 1.03 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.13s
+                                  
+[3/600][277] Loss_D: 5.37 Loss_G: 15.54 Loss_KL: 1.95 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[4/600][277] Loss_D: 7.78 Loss_G: 9.73 Loss_KL: 2.15 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.79s
+                                  
+[5/600][277] Loss_D: 6.86 Loss_G: 19.27 Loss_KL: 2.63 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[6/600][277] Loss_D: 6.31 Loss_G: 17.62 Loss_KL: 2.50 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.10s
+                                  
+[7/600][277] Loss_D: 5.42 Loss_G: 17.80 Loss_KL: 2.91 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[8/600][277] Loss_D: 4.69 Loss_G: 19.21 Loss_KL: 4.28 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.88s
+                                  
+[9/600][277] Loss_D: 5.57 Loss_G: 26.36 Loss_KL: 5.00 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[10/600][277] Loss_D: 4.47 Loss_G: 24.82 Loss_KL: 5.88 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.18s
+                                  
+[11/600][277] Loss_D: 4.08 Loss_G: 21.69 Loss_KL: 4.75 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.89s
+                                  
+[12/600][277] Loss_D: 3.76 Loss_G: 20.31 Loss_KL: 5.72 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.19s
+                                  
+[13/600][277] Loss_D: 4.87 Loss_G: 27.11 Loss_KL: 5.22 lr_g: 0.00200000 lr_d: 0.00010000 Time: 64.99s
+                                  
+[14/600][277] Loss_D: 3.91 Loss_G: 21.47 Loss_KL: 4.71 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.18s
+                                  
+[15/600][277] Loss_D: 2.81 Loss_G: 24.79 Loss_KL: 6.97 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.84s
+                                  
+[16/600][277] Loss_D: 4.93 Loss_G: 25.44 Loss_KL: 5.91 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.13s
+                                  
+[17/600][277] Loss_D: 3.28 Loss_G: 24.00 Loss_KL: 6.47 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.07s
+                                  
+[18/600][277] Loss_D: 4.58 Loss_G: 21.50 Loss_KL: 7.56 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.06s
+                                  
+[19/600][277] Loss_D: 3.54 Loss_G: 23.32 Loss_KL: 6.90 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.84s
+                                  
+[20/600][277] Loss_D: 2.82 Loss_G: 29.69 Loss_KL: 6.25 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.08s
+                                  
+[21/600][277] Loss_D: 4.61 Loss_G: 25.13 Loss_KL: 7.67 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[22/600][277] Loss_D: 3.82 Loss_G: 26.60 Loss_KL: 7.12 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.92s
+                                  
+[23/600][277] Loss_D: 3.78 Loss_G: 28.12 Loss_KL: 7.40 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[24/600][277] Loss_D: 2.20 Loss_G: 25.21 Loss_KL: 8.09 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.10s
+                                  
+[25/600][277] Loss_D: 2.49 Loss_G: 24.71 Loss_KL: 7.39 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[26/600][277] Loss_D: 3.76 Loss_G: 31.03 Loss_KL: 7.47 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.91s
+                                  
+[27/600][277] Loss_D: 2.65 Loss_G: 30.75 Loss_KL: 8.14 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[28/600][277] Loss_D: 4.05 Loss_G: 34.73 Loss_KL: 7.08 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[29/600][277] Loss_D: 2.81 Loss_G: 31.02 Loss_KL: 8.63 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.95s
+                                  
+[30/600][277] Loss_D: 4.38 Loss_G: 31.22 Loss_KL: 11.03 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[31/600][277] Loss_D: 2.79 Loss_G: 29.54 Loss_KL: 9.68 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.17s
+                                  
+[32/600][277] Loss_D: 8.69 Loss_G: 28.02 Loss_KL: 8.22 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.10s
+                                  
+[33/600][277] Loss_D: 1.86 Loss_G: 39.56 Loss_KL: 8.86 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.91s
+                                  
+[34/600][277] Loss_D: 2.29 Loss_G: 28.87 Loss_KL: 9.33 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.18s
+                                  
+[35/600][277] Loss_D: 4.78 Loss_G: 28.64 Loss_KL: 8.89 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.17s
+                                  
+[36/600][277] Loss_D: 5.04 Loss_G: 47.33 Loss_KL: 9.32 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.15s
+                                  
+[37/600][277] Loss_D: 2.45 Loss_G: 35.99 Loss_KL: 9.72 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.87s
+                                  
+[38/600][277] Loss_D: 4.66 Loss_G: 29.08 Loss_KL: 9.88 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[39/600][277] Loss_D: 2.91 Loss_G: 42.59 Loss_KL: 8.83 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.19s
+                                  
+[40/600][277] Loss_D: 2.98 Loss_G: 34.35 Loss_KL: 10.22 lr_g: 0.00200000 lr_d: 0.00010000 Time: 66.03s
+                                  
+[41/600][277] Loss_D: 1.71 Loss_G: 36.88 Loss_KL: 9.69 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[42/600][277] Loss_D: 4.04 Loss_G: 43.20 Loss_KL: 10.70 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.18s
+                                  
+[43/600][277] Loss_D: 1.30 Loss_G: 34.00 Loss_KL: 9.69 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[44/600][277] Loss_D: 1.77 Loss_G: 31.15 Loss_KL: 8.98 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.98s
+                                  
+[45/600][277] Loss_D: 1.37 Loss_G: 31.79 Loss_KL: 9.87 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.22s
+                                  
+[46/600][277] Loss_D: 1.98 Loss_G: 35.10 Loss_KL: 10.05 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[47/600][277] Loss_D: 1.75 Loss_G: 33.80 Loss_KL: 10.91 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.96s
+                                  
+[48/600][277] Loss_D: 2.56 Loss_G: 39.36 Loss_KL: 12.99 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.19s
+                                  
+[49/600][277] Loss_D: 4.29 Loss_G: 45.44 Loss_KL: 10.33 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[50/600][277] Loss_D: 1.17 Loss_G: 33.39 Loss_KL: 10.79 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.20s
+                                  
+Save G/Ds models.
+[51/600][277] Loss_D: 1.48 Loss_G: 31.06 Loss_KL: 11.48 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.91s
+                                  
+[52/600][277] Loss_D: 2.44 Loss_G: 32.93 Loss_KL: 13.19 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.15s
+                                  
+[53/600][277] Loss_D: 1.17 Loss_G: 35.96 Loss_KL: 11.51 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.07s
+                                  
+[54/600][277] Loss_D: 0.98 Loss_G: 34.57 Loss_KL: 10.60 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.20s
+                                  
+[55/600][277] Loss_D: 1.71 Loss_G: 32.41 Loss_KL: 11.49 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.90s
+                                  
+[56/600][277] Loss_D: 2.05 Loss_G: 39.15 Loss_KL: 9.98 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[57/600][277] Loss_D: 0.60 Loss_G: 35.59 Loss_KL: 12.05 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.21s
+                                  
+[58/600][277] Loss_D: 1.07 Loss_G: 35.13 Loss_KL: 11.55 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.90s
+                                  
+[59/600][277] Loss_D: 1.35 Loss_G: 43.09 Loss_KL: 13.33 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[60/600][277] Loss_D: 2.04 Loss_G: 32.22 Loss_KL: 12.66 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[61/600][277] Loss_D: 7.43 Loss_G: 45.69 Loss_KL: 10.15 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[62/600][277] Loss_D: 1.71 Loss_G: 45.69 Loss_KL: 12.74 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.90s
+                                  
+[63/600][277] Loss_D: 0.70 Loss_G: 40.67 Loss_KL: 12.80 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[64/600][277] Loss_D: 1.81 Loss_G: 35.09 Loss_KL: 10.72 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.15s
+                                  
+[65/600][277] Loss_D: 1.76 Loss_G: 41.63 Loss_KL: 11.97 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.91s
+                                  
+[66/600][277] Loss_D: 2.12 Loss_G: 53.79 Loss_KL: 12.44 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[67/600][277] Loss_D: 2.11 Loss_G: 32.61 Loss_KL: 12.35 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[68/600][277] Loss_D: 2.50 Loss_G: 34.05 Loss_KL: 12.77 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[69/600][277] Loss_D: 1.31 Loss_G: 42.28 Loss_KL: 12.12 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.85s
+                                  
+[70/600][277] Loss_D: 0.59 Loss_G: 36.39 Loss_KL: 13.37 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[71/600][277] Loss_D: 2.39 Loss_G: 42.33 Loss_KL: 12.30 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[72/600][277] Loss_D: 1.34 Loss_G: 36.89 Loss_KL: 12.19 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[73/600][277] Loss_D: 0.61 Loss_G: 43.27 Loss_KL: 11.64 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.89s
+                                  
+[74/600][277] Loss_D: 1.62 Loss_G: 31.86 Loss_KL: 11.54 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.08s
+                                  
+[75/600][277] Loss_D: 2.91 Loss_G: 33.95 Loss_KL: 13.55 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.10s
+                                  
+[76/600][277] Loss_D: 2.33 Loss_G: 45.24 Loss_KL: 13.47 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.87s
+                                  
+[77/600][277] Loss_D: 1.34 Loss_G: 45.72 Loss_KL: 12.72 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.19s
+                                  
+[78/600][277] Loss_D: 2.10 Loss_G: 35.81 Loss_KL: 13.76 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[79/600][277] Loss_D: 2.63 Loss_G: 36.38 Loss_KL: 13.74 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[80/600][277] Loss_D: 0.90 Loss_G: 39.76 Loss_KL: 13.50 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.90s
+                                  
+[81/600][277] Loss_D: 0.97 Loss_G: 41.94 Loss_KL: 12.42 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.10s
+                                  
+[82/600][277] Loss_D: 1.01 Loss_G: 36.55 Loss_KL: 13.55 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.14s
+                                  
+[83/600][277] Loss_D: 3.13 Loss_G: 53.04 Loss_KL: 13.87 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.26s
+                                  
+[84/600][277] Loss_D: 1.18 Loss_G: 44.71 Loss_KL: 13.38 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.93s
+                                  
+[85/600][277] Loss_D: 2.58 Loss_G: 42.07 Loss_KL: 13.28 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[86/600][277] Loss_D: 6.48 Loss_G: 47.93 Loss_KL: 15.77 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.23s
+                                  
+[87/600][277] Loss_D: 0.86 Loss_G: 39.95 Loss_KL: 15.40 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.88s
+                                  
+[88/600][277] Loss_D: 0.93 Loss_G: 43.14 Loss_KL: 15.26 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[89/600][277] Loss_D: 3.02 Loss_G: 47.03 Loss_KL: 15.00 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.12s
+                                  
+[90/600][277] Loss_D: 0.97 Loss_G: 49.29 Loss_KL: 12.56 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.13s
+                                  
+[91/600][277] Loss_D: 1.02 Loss_G: 43.92 Loss_KL: 14.38 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.83s
+                                  
+[92/600][277] Loss_D: 0.99 Loss_G: 53.70 Loss_KL: 15.30 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[93/600][277] Loss_D: 0.96 Loss_G: 40.63 Loss_KL: 17.51 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.17s
+                                  
+[94/600][277] Loss_D: 0.95 Loss_G: 35.83 Loss_KL: 14.60 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.83s
+                                  
+[95/600][277] Loss_D: 1.07 Loss_G: 44.49 Loss_KL: 14.70 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.16s
+                                  
+[96/600][277] Loss_D: 1.37 Loss_G: 36.54 Loss_KL: 14.66 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[97/600][277] Loss_D: 1.26 Loss_G: 52.08 Loss_KL: 14.38 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.11s
+                                  
+[98/600][277] Loss_D: 2.80 Loss_G: 44.82 Loss_KL: 14.20 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.88s
+                                  
+[99/600][277] Loss_D: 2.46 Loss_G: 40.61 Loss_KL: 16.06 lr_g: 0.00200000 lr_d: 0.00010000 Time: 65.09s
+                                  
+[100/600][277] Loss_D: 1.49 Loss_G: 32.81 Loss_KL: 15.08 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.21s
+                                  
+Save G/Ds models.
+[101/600][277] Loss_D: 1.15 Loss_G: 36.11 Loss_KL: 15.64 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[102/600][277] Loss_D: 0.94 Loss_G: 37.13 Loss_KL: 15.60 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.84s
+                                  
+[103/600][277] Loss_D: 1.02 Loss_G: 33.68 Loss_KL: 15.09 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[104/600][277] Loss_D: 1.26 Loss_G: 31.85 Loss_KL: 14.68 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[105/600][277] Loss_D: 1.85 Loss_G: 33.02 Loss_KL: 15.21 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.86s
+                                  
+[106/600][277] Loss_D: 0.41 Loss_G: 42.32 Loss_KL: 17.84 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[107/600][277] Loss_D: 0.55 Loss_G: 41.41 Loss_KL: 13.73 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[108/600][277] Loss_D: 0.53 Loss_G: 41.71 Loss_KL: 15.94 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.21s
+                                  
+[109/600][277] Loss_D: 0.23 Loss_G: 53.60 Loss_KL: 20.67 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.85s
+                                  
+[110/600][277] Loss_D: 0.52 Loss_G: 34.07 Loss_KL: 15.04 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[111/600][277] Loss_D: 0.76 Loss_G: 32.12 Loss_KL: 15.20 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[112/600][277] Loss_D: 0.28 Loss_G: 41.55 Loss_KL: 16.32 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.92s
+                                  
+[113/600][277] Loss_D: 0.52 Loss_G: 45.43 Loss_KL: 15.32 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[114/600][277] Loss_D: 1.53 Loss_G: 38.53 Loss_KL: 15.02 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.23s
+                                  
+[115/600][277] Loss_D: 1.45 Loss_G: 43.16 Loss_KL: 16.05 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[116/600][277] Loss_D: 0.56 Loss_G: 38.32 Loss_KL: 15.38 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.87s
+                                  
+[117/600][277] Loss_D: 0.88 Loss_G: 49.32 Loss_KL: 15.64 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[118/600][277] Loss_D: 0.83 Loss_G: 43.70 Loss_KL: 16.41 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.14s
+                                  
+[119/600][277] Loss_D: 1.36 Loss_G: 44.66 Loss_KL: 15.31 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.19s
+                                  
+[120/600][277] Loss_D: 1.67 Loss_G: 40.70 Loss_KL: 16.60 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.87s
+                                  
+[121/600][277] Loss_D: 0.55 Loss_G: 51.87 Loss_KL: 21.90 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[122/600][277] Loss_D: 0.64 Loss_G: 54.01 Loss_KL: 16.27 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[123/600][277] Loss_D: 0.95 Loss_G: 44.61 Loss_KL: 16.30 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.91s
+                                  
+[124/600][277] Loss_D: 1.16 Loss_G: 39.85 Loss_KL: 15.48 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[125/600][277] Loss_D: 0.45 Loss_G: 40.93 Loss_KL: 15.05 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.16s
+                                  
+[126/600][277] Loss_D: 0.69 Loss_G: 38.16 Loss_KL: 17.93 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[127/600][277] Loss_D: 0.69 Loss_G: 51.10 Loss_KL: 16.97 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.86s
+                                  
+[128/600][277] Loss_D: 0.85 Loss_G: 40.69 Loss_KL: 17.45 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.25s
+                                  
+[129/600][277] Loss_D: 0.75 Loss_G: 40.80 Loss_KL: 15.80 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[130/600][277] Loss_D: 0.90 Loss_G: 43.35 Loss_KL: 15.88 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.90s
+                                  
+[131/600][277] Loss_D: 0.70 Loss_G: 43.29 Loss_KL: 15.57 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[132/600][277] Loss_D: 0.48 Loss_G: 47.87 Loss_KL: 16.21 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.14s
+                                  
+[133/600][277] Loss_D: 0.67 Loss_G: 35.08 Loss_KL: 15.61 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[134/600][277] Loss_D: 0.51 Loss_G: 40.45 Loss_KL: 16.69 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.89s
+                                  
+[135/600][277] Loss_D: 1.17 Loss_G: 37.93 Loss_KL: 17.45 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[136/600][277] Loss_D: 0.70 Loss_G: 41.47 Loss_KL: 16.74 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[137/600][277] Loss_D: 0.27 Loss_G: 49.38 Loss_KL: 16.95 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[138/600][277] Loss_D: 0.38 Loss_G: 44.46 Loss_KL: 17.46 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.83s
+                                  
+[139/600][277] Loss_D: 0.29 Loss_G: 47.05 Loss_KL: 18.15 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[140/600][277] Loss_D: 0.79 Loss_G: 36.71 Loss_KL: 15.67 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.22s
+                                  
+[141/600][277] Loss_D: 0.68 Loss_G: 40.19 Loss_KL: 19.09 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.86s
+                                  
+[142/600][277] Loss_D: 0.53 Loss_G: 51.48 Loss_KL: 16.43 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[143/600][277] Loss_D: 0.91 Loss_G: 44.43 Loss_KL: 18.69 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[144/600][277] Loss_D: 0.51 Loss_G: 42.91 Loss_KL: 18.96 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[145/600][277] Loss_D: 1.16 Loss_G: 38.55 Loss_KL: 17.58 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.88s
+                                  
+[146/600][277] Loss_D: 0.38 Loss_G: 44.04 Loss_KL: 17.73 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.14s
+                                  
+[147/600][277] Loss_D: 0.36 Loss_G: 48.84 Loss_KL: 18.44 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[148/600][277] Loss_D: 1.09 Loss_G: 42.66 Loss_KL: 17.32 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.10s
+                                  
+[149/600][277] Loss_D: 0.41 Loss_G: 55.25 Loss_KL: 18.97 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.92s
+                                  
+[150/600][277] Loss_D: 0.92 Loss_G: 36.61 Loss_KL: 16.67 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+Save G/Ds models.
+[151/600][277] Loss_D: 0.57 Loss_G: 43.46 Loss_KL: 17.93 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[152/600][277] Loss_D: 1.49 Loss_G: 43.69 Loss_KL: 18.98 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.88s
+                                  
+[153/600][277] Loss_D: 0.52 Loss_G: 34.97 Loss_KL: 17.71 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[154/600][277] Loss_D: 0.53 Loss_G: 40.90 Loss_KL: 17.50 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[155/600][277] Loss_D: 0.49 Loss_G: 37.90 Loss_KL: 17.44 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.18s
+                                  
+[156/600][277] Loss_D: 1.03 Loss_G: 47.24 Loss_KL: 16.14 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.87s
+                                  
+[157/600][277] Loss_D: 1.89 Loss_G: 40.81 Loss_KL: 17.55 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[158/600][277] Loss_D: 1.11 Loss_G: 37.99 Loss_KL: 17.43 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.17s
+                                  
+[159/600][277] Loss_D: 0.91 Loss_G: 52.09 Loss_KL: 17.08 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.91s
+                                  
+[160/600][277] Loss_D: 2.15 Loss_G: 41.60 Loss_KL: 17.35 lr_g: 0.00020000 lr_d: 0.00001000 Time: 64.94s
+                                  
+[161/600][277] Loss_D: 1.86 Loss_G: 45.57 Loss_KL: 18.06 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[162/600][277] Loss_D: 0.41 Loss_G: 42.56 Loss_KL: 17.13 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.16s
+                                  
+[163/600][277] Loss_D: 0.46 Loss_G: 45.97 Loss_KL: 16.48 lr_g: 0.00020000 lr_d: 0.00001000 Time: 66.01s
+                                  
+[164/600][277] Loss_D: 0.67 Loss_G: 42.07 Loss_KL: 19.33 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[165/600][277] Loss_D: 0.53 Loss_G: 40.99 Loss_KL: 17.01 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[166/600][277] Loss_D: 1.05 Loss_G: 52.85 Loss_KL: 16.12 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.16s
+                                  
+[167/600][277] Loss_D: 0.38 Loss_G: 49.81 Loss_KL: 17.51 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.88s
+                                  
+[168/600][277] Loss_D: 0.58 Loss_G: 45.13 Loss_KL: 17.68 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.14s
+                                  
+[169/600][277] Loss_D: 0.50 Loss_G: 49.74 Loss_KL: 15.92 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[170/600][277] Loss_D: 0.49 Loss_G: 52.15 Loss_KL: 17.27 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.87s
+                                  
+[171/600][277] Loss_D: 0.33 Loss_G: 45.15 Loss_KL: 16.53 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[172/600][277] Loss_D: 0.61 Loss_G: 57.42 Loss_KL: 17.18 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[173/600][277] Loss_D: 0.93 Loss_G: 37.28 Loss_KL: 16.94 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.20s
+                                  
+[174/600][277] Loss_D: 0.38 Loss_G: 54.35 Loss_KL: 18.64 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.90s
+                                  
+[175/600][277] Loss_D: 0.69 Loss_G: 50.19 Loss_KL: 18.21 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[176/600][277] Loss_D: 7.78 Loss_G: 49.40 Loss_KL: 18.53 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[177/600][277] Loss_D: 0.47 Loss_G: 41.77 Loss_KL: 16.89 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.90s
+                                  
+[178/600][277] Loss_D: 0.35 Loss_G: 45.83 Loss_KL: 18.96 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.15s
+                                  
+[179/600][277] Loss_D: 0.36 Loss_G: 44.46 Loss_KL: 18.23 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[180/600][277] Loss_D: 0.10 Loss_G: 52.45 Loss_KL: 18.68 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[181/600][277] Loss_D: 0.25 Loss_G: 43.02 Loss_KL: 19.65 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.86s
+                                  
+[182/600][277] Loss_D: 1.67 Loss_G: 42.73 Loss_KL: 19.64 lr_g: 0.00020000 lr_d: 0.00001000 Time: 64.96s
+                                  
+[183/600][277] Loss_D: 0.46 Loss_G: 47.33 Loss_KL: 18.51 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[184/600][277] Loss_D: 0.70 Loss_G: 42.94 Loss_KL: 19.24 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.12s
+                                  
+[185/600][277] Loss_D: 0.47 Loss_G: 48.62 Loss_KL: 18.80 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.92s
+                                  
+[186/600][277] Loss_D: 0.60 Loss_G: 56.27 Loss_KL: 18.50 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.08s
+                                  
+[187/600][277] Loss_D: 0.90 Loss_G: 41.54 Loss_KL: 18.21 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.23s
+                                  
+[188/600][277] Loss_D: 0.32 Loss_G: 54.74 Loss_KL: 18.10 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.86s
+                                  
+[189/600][277] Loss_D: 1.45 Loss_G: 56.36 Loss_KL: 18.28 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[190/600][277] Loss_D: 0.65 Loss_G: 44.37 Loss_KL: 19.01 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.17s
+                                  
+[191/600][277] Loss_D: 0.72 Loss_G: 37.40 Loss_KL: 18.41 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.17s
+                                  
+[192/600][277] Loss_D: 0.21 Loss_G: 55.66 Loss_KL: 19.19 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.93s
+                                  
+[193/600][277] Loss_D: 0.54 Loss_G: 46.32 Loss_KL: 17.68 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.16s
+                                  
+[194/600][277] Loss_D: 0.58 Loss_G: 46.20 Loss_KL: 19.92 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.16s
+                                  
+[195/600][277] Loss_D: 1.60 Loss_G: 42.07 Loss_KL: 17.71 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.94s
+                                  
+[196/600][277] Loss_D: 0.60 Loss_G: 47.86 Loss_KL: 19.24 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.11s
+                                  
+[197/600][277] Loss_D: 0.67 Loss_G: 52.42 Loss_KL: 19.22 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[198/600][277] Loss_D: 0.33 Loss_G: 56.82 Loss_KL: 18.24 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.13s
+                                  
+[199/600][277] Loss_D: 1.11 Loss_G: 44.18 Loss_KL: 19.62 lr_g: 0.00020000 lr_d: 0.00001000 Time: 65.97s
+                                  
+[200/600][277] Loss_D: 0.54 Loss_G: 53.76 Loss_KL: 19.29 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.16s
+                                  
+Save G/Ds models.
+[201/600][277] Loss_D: 0.16 Loss_G: 50.56 Loss_KL: 18.11 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.16s
+                                  
+[202/600][277] Loss_D: 0.08 Loss_G: 59.42 Loss_KL: 18.00 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.23s
+                                  
+[203/600][277] Loss_D: 0.75 Loss_G: 36.74 Loss_KL: 20.08 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.89s
+                                  
+[204/600][277] Loss_D: 0.86 Loss_G: 42.73 Loss_KL: 19.32 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.15s
+                                  
+[205/600][277] Loss_D: 0.54 Loss_G: 35.12 Loss_KL: 18.61 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[206/600][277] Loss_D: 0.22 Loss_G: 51.05 Loss_KL: 18.23 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.91s
+                                  
+[207/600][277] Loss_D: 0.34 Loss_G: 48.23 Loss_KL: 20.18 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[208/600][277] Loss_D: 1.11 Loss_G: 38.22 Loss_KL: 18.40 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.19s
+                                  
+[209/600][277] Loss_D: 0.65 Loss_G: 43.23 Loss_KL: 19.00 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[210/600][277] Loss_D: 0.42 Loss_G: 51.40 Loss_KL: 19.37 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.90s
+                                  
+[211/600][277] Loss_D: 0.37 Loss_G: 43.64 Loss_KL: 19.17 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.14s
+                                  
+[212/600][277] Loss_D: 0.10 Loss_G: 55.09 Loss_KL: 20.86 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[213/600][277] Loss_D: 0.45 Loss_G: 43.32 Loss_KL: 19.14 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.89s
+                                  
+[214/600][277] Loss_D: 0.67 Loss_G: 42.67 Loss_KL: 18.98 lr_g: 0.00002000 lr_d: 0.00000100 Time: 64.87s
+                                  
+[215/600][277] Loss_D: 0.13 Loss_G: 49.34 Loss_KL: 19.84 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.23s
+                                  
+[216/600][277] Loss_D: 0.32 Loss_G: 61.47 Loss_KL: 20.67 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[217/600][277] Loss_D: 0.34 Loss_G: 51.97 Loss_KL: 19.98 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.91s
+                                  
+[218/600][277] Loss_D: 0.33 Loss_G: 51.06 Loss_KL: 20.67 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[219/600][277] Loss_D: 0.28 Loss_G: 45.29 Loss_KL: 18.22 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[220/600][277] Loss_D: 0.19 Loss_G: 50.38 Loss_KL: 19.32 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.19s
+                                  
+[221/600][277] Loss_D: 0.45 Loss_G: 52.24 Loss_KL: 17.95 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.75s
+                                  
+[222/600][277] Loss_D: 0.57 Loss_G: 65.49 Loss_KL: 18.58 lr_g: 0.00002000 lr_d: 0.00000100 Time: 64.98s
+                                  
+[223/600][277] Loss_D: 0.08 Loss_G: 60.39 Loss_KL: 18.97 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[224/600][277] Loss_D: 0.38 Loss_G: 45.55 Loss_KL: 21.33 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.97s
+                                  
+[225/600][277] Loss_D: 0.41 Loss_G: 37.35 Loss_KL: 18.57 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[226/600][277] Loss_D: 0.26 Loss_G: 51.60 Loss_KL: 19.17 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[227/600][277] Loss_D: 0.19 Loss_G: 48.55 Loss_KL: 17.92 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.20s
+                                  
+[228/600][277] Loss_D: 0.25 Loss_G: 44.03 Loss_KL: 18.52 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.85s
+                                  
+[229/600][277] Loss_D: 0.64 Loss_G: 44.00 Loss_KL: 22.68 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[230/600][277] Loss_D: 0.25 Loss_G: 47.73 Loss_KL: 18.78 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.14s
+                                  
+[231/600][277] Loss_D: 1.04 Loss_G: 33.35 Loss_KL: 19.22 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[232/600][277] Loss_D: 0.33 Loss_G: 50.37 Loss_KL: 19.21 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.87s
+                                  
+[233/600][277] Loss_D: 0.49 Loss_G: 47.40 Loss_KL: 18.91 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[234/600][277] Loss_D: 0.36 Loss_G: 51.09 Loss_KL: 17.75 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[235/600][277] Loss_D: 0.91 Loss_G: 47.35 Loss_KL: 19.32 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.88s
+                                  
+[236/600][277] Loss_D: 0.31 Loss_G: 43.31 Loss_KL: 19.37 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.20s
+                                  
+[237/600][277] Loss_D: 0.55 Loss_G: 49.71 Loss_KL: 20.29 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.08s
+                                  
+[238/600][277] Loss_D: 0.50 Loss_G: 51.63 Loss_KL: 18.88 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.06s
+                                  
+[239/600][277] Loss_D: 0.41 Loss_G: 42.23 Loss_KL: 18.64 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.86s
+                                  
+[240/600][277] Loss_D: 0.50 Loss_G: 38.38 Loss_KL: 17.74 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[241/600][277] Loss_D: 0.93 Loss_G: 50.91 Loss_KL: 20.49 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[242/600][277] Loss_D: 0.33 Loss_G: 48.66 Loss_KL: 20.28 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.85s
+                                  
+[243/600][277] Loss_D: 0.46 Loss_G: 44.93 Loss_KL: 18.84 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[244/600][277] Loss_D: 0.33 Loss_G: 46.12 Loss_KL: 20.36 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[245/600][277] Loss_D: 0.46 Loss_G: 46.25 Loss_KL: 18.01 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[246/600][277] Loss_D: 0.26 Loss_G: 54.57 Loss_KL: 19.31 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.87s
+                                  
+[247/600][277] Loss_D: 0.79 Loss_G: 36.03 Loss_KL: 17.81 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.22s
+                                  
+[248/600][277] Loss_D: 0.53 Loss_G: 51.61 Loss_KL: 19.01 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[249/600][277] Loss_D: 0.22 Loss_G: 47.72 Loss_KL: 18.05 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.20s
+                                  
+[250/600][277] Loss_D: 3.06 Loss_G: 34.85 Loss_KL: 18.76 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.90s
+                                  
+Save G/Ds models.
+[251/600][277] Loss_D: 0.24 Loss_G: 58.63 Loss_KL: 20.44 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.16s
+                                  
+[252/600][277] Loss_D: 0.41 Loss_G: 51.99 Loss_KL: 20.68 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[253/600][277] Loss_D: 0.29 Loss_G: 47.08 Loss_KL: 19.07 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.83s
+                                  
+[254/600][277] Loss_D: 0.30 Loss_G: 45.04 Loss_KL: 18.83 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.16s
+                                  
+[255/600][277] Loss_D: 0.44 Loss_G: 49.29 Loss_KL: 20.94 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[256/600][277] Loss_D: 0.65 Loss_G: 64.32 Loss_KL: 19.04 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[257/600][277] Loss_D: 0.23 Loss_G: 44.10 Loss_KL: 19.37 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.86s
+                                  
+[258/600][277] Loss_D: 0.17 Loss_G: 52.94 Loss_KL: 20.50 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.08s
+                                  
+[259/600][277] Loss_D: 0.40 Loss_G: 55.63 Loss_KL: 20.96 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[260/600][277] Loss_D: 0.34 Loss_G: 67.60 Loss_KL: 21.44 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.88s
+                                  
+[261/600][277] Loss_D: 0.41 Loss_G: 44.73 Loss_KL: 19.20 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[262/600][277] Loss_D: 0.38 Loss_G: 40.48 Loss_KL: 19.27 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[263/600][277] Loss_D: 0.47 Loss_G: 41.49 Loss_KL: 18.03 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.07s
+                                  
+[264/600][277] Loss_D: 0.32 Loss_G: 52.69 Loss_KL: 19.84 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.88s
+                                  
+[265/600][277] Loss_D: 0.18 Loss_G: 51.10 Loss_KL: 21.01 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.07s
+                                  
+[266/600][277] Loss_D: 0.41 Loss_G: 53.70 Loss_KL: 19.02 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[267/600][277] Loss_D: 0.34 Loss_G: 47.01 Loss_KL: 19.37 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[268/600][277] Loss_D: 0.14 Loss_G: 63.90 Loss_KL: 17.47 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.91s
+                                  
+[269/600][277] Loss_D: 0.58 Loss_G: 45.19 Loss_KL: 19.93 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[270/600][277] Loss_D: 2.42 Loss_G: 46.94 Loss_KL: 18.26 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.07s
+                                  
+[271/600][277] Loss_D: 0.24 Loss_G: 57.76 Loss_KL: 20.06 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.83s
+                                  
+[272/600][277] Loss_D: 0.26 Loss_G: 38.92 Loss_KL: 18.63 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[273/600][277] Loss_D: 0.51 Loss_G: 54.69 Loss_KL: 19.49 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.08s
+                                  
+[274/600][277] Loss_D: 0.06 Loss_G: 50.55 Loss_KL: 18.09 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[275/600][277] Loss_D: 0.26 Loss_G: 58.21 Loss_KL: 18.76 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.85s
+                                  
+[276/600][277] Loss_D: 0.29 Loss_G: 50.62 Loss_KL: 19.11 lr_g: 0.00002000 lr_d: 0.00000100 Time: 64.91s
+                                  
+[277/600][277] Loss_D: 0.24 Loss_G: 39.04 Loss_KL: 18.60 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.07s
+                                  
+[278/600][277] Loss_D: 0.16 Loss_G: 59.19 Loss_KL: 17.51 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.88s
+                                  
+[279/600][277] Loss_D: 0.15 Loss_G: 65.86 Loss_KL: 20.18 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[280/600][277] Loss_D: 0.17 Loss_G: 50.31 Loss_KL: 20.14 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.09s
+                                  
+[281/600][277] Loss_D: 0.20 Loss_G: 53.56 Loss_KL: 20.03 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.15s
+                                  
+[282/600][277] Loss_D: 0.63 Loss_G: 38.52 Loss_KL: 19.28 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.87s
+                                  
+[283/600][277] Loss_D: 1.47 Loss_G: 37.47 Loss_KL: 20.88 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.16s
+                                  
+[284/600][277] Loss_D: 0.28 Loss_G: 50.02 Loss_KL: 18.62 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[285/600][277] Loss_D: 0.34 Loss_G: 50.14 Loss_KL: 19.07 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.14s
+                                  
+[286/600][277] Loss_D: 0.44 Loss_G: 54.96 Loss_KL: 19.51 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.88s
+                                  
+[287/600][277] Loss_D: 0.24 Loss_G: 53.53 Loss_KL: 19.76 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.11s
+                                  
+[288/600][277] Loss_D: 0.76 Loss_G: 44.41 Loss_KL: 19.55 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[289/600][277] Loss_D: 0.19 Loss_G: 50.76 Loss_KL: 18.31 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.91s
+                                  
+[290/600][277] Loss_D: 0.42 Loss_G: 52.42 Loss_KL: 19.10 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.10s
+                                  
+[291/600][277] Loss_D: 0.21 Loss_G: 48.72 Loss_KL: 19.39 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.13s
+                                  
+[292/600][277] Loss_D: 0.14 Loss_G: 56.40 Loss_KL: 21.14 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.18s
+                                  
+[293/600][277] Loss_D: 0.47 Loss_G: 55.07 Loss_KL: 18.91 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.87s
+                                  
+[294/600][277] Loss_D: 0.53 Loss_G: 47.82 Loss_KL: 18.97 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.07s
+                                  
+[295/600][277] Loss_D: 0.86 Loss_G: 58.05 Loss_KL: 18.02 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.23s
+                                  
+[296/600][277] Loss_D: 0.59 Loss_G: 37.47 Loss_KL: 19.38 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.18s
+                                  
+[297/600][277] Loss_D: 0.70 Loss_G: 48.34 Loss_KL: 20.80 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.91s
+                                  
+[298/600][277] Loss_D: 0.36 Loss_G: 49.83 Loss_KL: 18.94 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.15s
+                                  
+[299/600][277] Loss_D: 0.52 Loss_G: 39.23 Loss_KL: 18.60 lr_g: 0.00002000 lr_d: 0.00000100 Time: 65.12s
+                                  
+[300/600][277] Loss_D: 0.22 Loss_G: 46.19 Loss_KL: 18.75 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.98s
+                                  
+Save G/Ds models.
+[301/600][277] Loss_D: 0.60 Loss_G: 55.47 Loss_KL: 18.50 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.17s
+                                  
+[302/600][277] Loss_D: 0.26 Loss_G: 51.34 Loss_KL: 19.62 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.23s
+                                  
+[303/600][277] Loss_D: 0.38 Loss_G: 47.12 Loss_KL: 18.47 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[304/600][277] Loss_D: 0.43 Loss_G: 40.45 Loss_KL: 19.65 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.87s
+                                  
+[305/600][277] Loss_D: 0.28 Loss_G: 70.92 Loss_KL: 20.24 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[306/600][277] Loss_D: 0.78 Loss_G: 46.37 Loss_KL: 18.40 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.15s
+                                  
+[307/600][277] Loss_D: 0.58 Loss_G: 51.68 Loss_KL: 18.83 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.93s
+                                  
+[308/600][277] Loss_D: 0.11 Loss_G: 55.74 Loss_KL: 18.96 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[309/600][277] Loss_D: 0.10 Loss_G: 58.41 Loss_KL: 21.38 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[310/600][277] Loss_D: 0.71 Loss_G: 38.61 Loss_KL: 18.53 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.16s
+                                  
+[311/600][277] Loss_D: 0.18 Loss_G: 56.98 Loss_KL: 19.85 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.87s
+                                  
+[312/600][277] Loss_D: 0.42 Loss_G: 47.29 Loss_KL: 18.38 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[313/600][277] Loss_D: 0.45 Loss_G: 44.78 Loss_KL: 18.64 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[314/600][277] Loss_D: 0.36 Loss_G: 38.97 Loss_KL: 18.55 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[315/600][277] Loss_D: 0.57 Loss_G: 51.92 Loss_KL: 20.25 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.74s
+                                  
+[316/600][277] Loss_D: 0.32 Loss_G: 48.78 Loss_KL: 19.29 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.14s
+                                  
+[317/600][277] Loss_D: 0.29 Loss_G: 44.24 Loss_KL: 19.04 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.14s
+                                  
+[318/600][277] Loss_D: 0.21 Loss_G: 56.00 Loss_KL: 18.42 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.88s
+                                  
+[319/600][277] Loss_D: 0.68 Loss_G: 56.78 Loss_KL: 19.82 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.15s
+                                  
+[320/600][277] Loss_D: 0.12 Loss_G: 69.50 Loss_KL: 20.36 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.14s
+                                  
+[321/600][277] Loss_D: 0.69 Loss_G: 52.30 Loss_KL: 18.50 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[322/600][277] Loss_D: 0.23 Loss_G: 45.81 Loss_KL: 19.98 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[323/600][277] Loss_D: 0.25 Loss_G: 55.30 Loss_KL: 19.20 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.15s
+                                  
+[324/600][277] Loss_D: 0.31 Loss_G: 42.32 Loss_KL: 19.21 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.14s
+                                  
+[325/600][277] Loss_D: 0.09 Loss_G: 48.60 Loss_KL: 19.63 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.74s
+                                  
+[326/600][277] Loss_D: 0.51 Loss_G: 48.65 Loss_KL: 18.28 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.15s
+                                  
+[327/600][277] Loss_D: 0.66 Loss_G: 48.88 Loss_KL: 16.87 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[328/600][277] Loss_D: 0.17 Loss_G: 64.87 Loss_KL: 20.03 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.14s
+                                  
+[329/600][277] Loss_D: 0.25 Loss_G: 55.88 Loss_KL: 20.44 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[330/600][277] Loss_D: 0.51 Loss_G: 46.05 Loss_KL: 19.01 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.15s
+                                  
+[331/600][277] Loss_D: 0.39 Loss_G: 49.28 Loss_KL: 19.91 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[332/600][277] Loss_D: 0.36 Loss_G: 42.01 Loss_KL: 18.27 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[333/600][277] Loss_D: 0.15 Loss_G: 54.91 Loss_KL: 19.31 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.83s
+                                  
+[334/600][277] Loss_D: 0.52 Loss_G: 40.92 Loss_KL: 18.33 lr_g: 0.00000200 lr_d: 0.00000010 Time: 64.93s
+                                  
+[335/600][277] Loss_D: 0.17 Loss_G: 55.42 Loss_KL: 19.72 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[336/600][277] Loss_D: 0.19 Loss_G: 50.83 Loss_KL: 19.12 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[337/600][277] Loss_D: 0.24 Loss_G: 52.30 Loss_KL: 18.70 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[338/600][277] Loss_D: 0.17 Loss_G: 57.29 Loss_KL: 17.71 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[339/600][277] Loss_D: 0.07 Loss_G: 55.61 Loss_KL: 20.23 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[340/600][277] Loss_D: 0.21 Loss_G: 46.39 Loss_KL: 19.23 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.85s
+                                  
+[341/600][277] Loss_D: 0.16 Loss_G: 42.31 Loss_KL: 18.60 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[342/600][277] Loss_D: 0.14 Loss_G: 43.84 Loss_KL: 18.05 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[343/600][277] Loss_D: 1.00 Loss_G: 42.98 Loss_KL: 19.56 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[344/600][277] Loss_D: 0.18 Loss_G: 54.91 Loss_KL: 19.38 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[345/600][277] Loss_D: 0.33 Loss_G: 44.49 Loss_KL: 18.33 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[346/600][277] Loss_D: 0.38 Loss_G: 48.01 Loss_KL: 18.23 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[347/600][277] Loss_D: 0.38 Loss_G: 40.47 Loss_KL: 19.29 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.83s
+                                  
+[348/600][277] Loss_D: 0.13 Loss_G: 48.93 Loss_KL: 17.60 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[349/600][277] Loss_D: 0.63 Loss_G: 51.16 Loss_KL: 19.29 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[350/600][277] Loss_D: 0.07 Loss_G: 56.23 Loss_KL: 20.06 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+Save G/Ds models.
+[351/600][277] Loss_D: 0.12 Loss_G: 49.21 Loss_KL: 17.66 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.89s
+                                  
+[352/600][277] Loss_D: 0.33 Loss_G: 44.92 Loss_KL: 19.85 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[353/600][277] Loss_D: 0.39 Loss_G: 45.03 Loss_KL: 17.95 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[354/600][277] Loss_D: 0.18 Loss_G: 44.65 Loss_KL: 20.75 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.88s
+                                  
+[355/600][277] Loss_D: 0.15 Loss_G: 48.59 Loss_KL: 19.33 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[356/600][277] Loss_D: 0.26 Loss_G: 49.32 Loss_KL: 19.99 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[357/600][277] Loss_D: 0.19 Loss_G: 54.25 Loss_KL: 19.50 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[358/600][277] Loss_D: 0.43 Loss_G: 42.24 Loss_KL: 18.49 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.92s
+                                  
+[359/600][277] Loss_D: 0.08 Loss_G: 60.41 Loss_KL: 19.22 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[360/600][277] Loss_D: 0.11 Loss_G: 46.05 Loss_KL: 16.88 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.07s
+                                  
+[361/600][277] Loss_D: 0.74 Loss_G: 36.17 Loss_KL: 19.11 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.21s
+                                  
+[362/600][277] Loss_D: 0.07 Loss_G: 60.30 Loss_KL: 20.53 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[363/600][277] Loss_D: 0.31 Loss_G: 40.71 Loss_KL: 20.56 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.17s
+                                  
+[364/600][277] Loss_D: 1.11 Loss_G: 61.34 Loss_KL: 20.30 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[365/600][277] Loss_D: 0.13 Loss_G: 53.45 Loss_KL: 19.88 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.84s
+                                  
+[366/600][277] Loss_D: 0.27 Loss_G: 52.80 Loss_KL: 18.78 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[367/600][277] Loss_D: 0.95 Loss_G: 38.91 Loss_KL: 20.67 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[368/600][277] Loss_D: 0.24 Loss_G: 48.51 Loss_KL: 21.38 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[369/600][277] Loss_D: 0.87 Loss_G: 49.10 Loss_KL: 18.71 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.82s
+                                  
+[370/600][277] Loss_D: 0.39 Loss_G: 53.18 Loss_KL: 18.71 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[371/600][277] Loss_D: 0.21 Loss_G: 44.50 Loss_KL: 18.42 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.09s
+                                  
+[372/600][277] Loss_D: 0.38 Loss_G: 41.69 Loss_KL: 19.60 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[373/600][277] Loss_D: 0.17 Loss_G: 45.54 Loss_KL: 19.74 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[374/600][277] Loss_D: 0.12 Loss_G: 51.42 Loss_KL: 18.56 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[375/600][277] Loss_D: 0.14 Loss_G: 53.86 Loss_KL: 19.16 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.17s
+                                  
+[376/600][277] Loss_D: 0.18 Loss_G: 47.29 Loss_KL: 18.33 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[377/600][277] Loss_D: 0.20 Loss_G: 48.73 Loss_KL: 18.57 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.19s
+                                  
+[378/600][277] Loss_D: 0.26 Loss_G: 41.67 Loss_KL: 21.10 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[379/600][277] Loss_D: 0.42 Loss_G: 46.44 Loss_KL: 20.04 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.17s
+                                  
+[380/600][277] Loss_D: 0.66 Loss_G: 37.56 Loss_KL: 18.98 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[381/600][277] Loss_D: 0.54 Loss_G: 42.11 Loss_KL: 19.83 lr_g: 0.00000200 lr_d: 0.00000010 Time: 64.97s
+                                  
+[382/600][277] Loss_D: 0.38 Loss_G: 47.17 Loss_KL: 19.87 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[383/600][277] Loss_D: 1.32 Loss_G: 53.73 Loss_KL: 18.16 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.85s
+                                  
+[384/600][277] Loss_D: 0.64 Loss_G: 45.96 Loss_KL: 17.51 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.11s
+                                  
+[385/600][277] Loss_D: 0.72 Loss_G: 44.74 Loss_KL: 17.76 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[386/600][277] Loss_D: 0.49 Loss_G: 33.98 Loss_KL: 17.89 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[387/600][277] Loss_D: 0.36 Loss_G: 45.63 Loss_KL: 18.28 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.85s
+                                  
+[388/600][277] Loss_D: 0.07 Loss_G: 53.65 Loss_KL: 19.40 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[389/600][277] Loss_D: 0.26 Loss_G: 55.20 Loss_KL: 19.38 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[390/600][277] Loss_D: 0.34 Loss_G: 39.30 Loss_KL: 19.27 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.85s
+                                  
+[391/600][277] Loss_D: 0.45 Loss_G: 50.67 Loss_KL: 20.78 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[392/600][277] Loss_D: 0.29 Loss_G: 54.20 Loss_KL: 20.33 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.08s
+                                  
+[393/600][277] Loss_D: 0.38 Loss_G: 44.22 Loss_KL: 19.34 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[394/600][277] Loss_D: 0.18 Loss_G: 53.04 Loss_KL: 18.52 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.87s
+                                  
+[395/600][277] Loss_D: 0.46 Loss_G: 43.71 Loss_KL: 20.03 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.12s
+                                  
+[396/600][277] Loss_D: 0.28 Loss_G: 43.14 Loss_KL: 19.27 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.10s
+                                  
+[397/600][277] Loss_D: 1.44 Loss_G: 66.49 Loss_KL: 18.21 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.13s
+                                  
+[398/600][277] Loss_D: 0.22 Loss_G: 47.30 Loss_KL: 20.01 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.86s
+                                  
+[399/600][277] Loss_D: 0.20 Loss_G: 44.93 Loss_KL: 19.25 lr_g: 0.00000200 lr_d: 0.00000010 Time: 65.20s
+                                  
+[400/600][277] Loss_D: 0.58 Loss_G: 41.17 Loss_KL: 21.08 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.14s
+                                  
+Save G/Ds models.
+[401/600][277] Loss_D: 0.23 Loss_G: 46.39 Loss_KL: 17.88 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.90s
+                                  
+[402/600][277] Loss_D: 0.15 Loss_G: 53.96 Loss_KL: 19.35 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.07s
+                                  
+[403/600][277] Loss_D: 0.93 Loss_G: 44.83 Loss_KL: 18.44 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.07s
+                                  
+[404/600][277] Loss_D: 0.45 Loss_G: 55.21 Loss_KL: 19.45 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.03s
+                                  
+[405/600][277] Loss_D: 0.26 Loss_G: 40.25 Loss_KL: 19.01 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.86s
+                                  
+[406/600][277] Loss_D: 0.20 Loss_G: 57.44 Loss_KL: 18.94 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[407/600][277] Loss_D: 0.18 Loss_G: 51.29 Loss_KL: 18.38 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[408/600][277] Loss_D: 0.19 Loss_G: 47.59 Loss_KL: 18.89 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.93s
+                                  
+[409/600][277] Loss_D: 0.24 Loss_G: 48.53 Loss_KL: 20.65 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.14s
+                                  
+[410/600][277] Loss_D: 0.13 Loss_G: 53.89 Loss_KL: 18.38 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[411/600][277] Loss_D: 0.92 Loss_G: 49.74 Loss_KL: 19.04 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[412/600][277] Loss_D: 0.25 Loss_G: 62.78 Loss_KL: 17.67 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.89s
+                                  
+[413/600][277] Loss_D: 0.22 Loss_G: 47.92 Loss_KL: 19.71 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[414/600][277] Loss_D: 0.40 Loss_G: 50.74 Loss_KL: 21.11 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.14s
+                                  
+[415/600][277] Loss_D: 0.14 Loss_G: 56.05 Loss_KL: 19.66 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.04s
+                                  
+[416/600][277] Loss_D: 0.36 Loss_G: 48.11 Loss_KL: 19.01 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.83s
+                                  
+[417/600][277] Loss_D: 0.52 Loss_G: 48.22 Loss_KL: 18.44 lr_g: 0.00000020 lr_d: 0.00000001 Time: 64.96s
+                                  
+[418/600][277] Loss_D: 0.41 Loss_G: 43.82 Loss_KL: 19.04 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.14s
+                                  
+[419/600][277] Loss_D: 0.37 Loss_G: 50.51 Loss_KL: 19.14 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.78s
+                                  
+[420/600][277] Loss_D: 0.19 Loss_G: 49.89 Loss_KL: 19.47 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[421/600][277] Loss_D: 0.15 Loss_G: 54.41 Loss_KL: 19.96 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[422/600][277] Loss_D: 0.13 Loss_G: 62.25 Loss_KL: 16.84 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.13s
+                                  
+[423/600][277] Loss_D: 0.36 Loss_G: 46.40 Loss_KL: 18.89 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.80s
+                                  
+[424/600][277] Loss_D: 0.49 Loss_G: 61.32 Loss_KL: 18.96 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.08s
+                                  
+[425/600][277] Loss_D: 0.25 Loss_G: 44.65 Loss_KL: 20.81 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[426/600][277] Loss_D: 0.26 Loss_G: 46.02 Loss_KL: 18.50 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.85s
+                                  
+[427/600][277] Loss_D: 0.17 Loss_G: 55.65 Loss_KL: 18.08 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.18s
+                                  
+[428/600][277] Loss_D: 0.52 Loss_G: 55.33 Loss_KL: 18.77 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[429/600][277] Loss_D: 0.18 Loss_G: 43.75 Loss_KL: 18.25 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[430/600][277] Loss_D: 0.26 Loss_G: 45.88 Loss_KL: 18.71 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.89s
+                                  
+[431/600][277] Loss_D: 0.44 Loss_G: 50.11 Loss_KL: 19.07 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[432/600][277] Loss_D: 0.86 Loss_G: 50.89 Loss_KL: 20.07 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[433/600][277] Loss_D: 0.25 Loss_G: 49.95 Loss_KL: 19.56 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[434/600][277] Loss_D: 0.35 Loss_G: 40.67 Loss_KL: 18.88 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.87s
+                                  
+[435/600][277] Loss_D: 0.20 Loss_G: 50.30 Loss_KL: 19.72 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[436/600][277] Loss_D: 0.16 Loss_G: 53.44 Loss_KL: 18.88 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[437/600][277] Loss_D: 0.19 Loss_G: 52.77 Loss_KL: 19.00 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.82s
+                                  
+[438/600][277] Loss_D: 0.14 Loss_G: 49.39 Loss_KL: 19.51 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.01s
+                                  
+[439/600][277] Loss_D: 0.12 Loss_G: 51.78 Loss_KL: 18.87 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[440/600][277] Loss_D: 0.27 Loss_G: 56.37 Loss_KL: 17.98 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[441/600][277] Loss_D: 0.22 Loss_G: 46.60 Loss_KL: 19.44 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.84s
+                                  
+[442/600][277] Loss_D: 0.62 Loss_G: 48.19 Loss_KL: 18.82 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.16s
+                                  
+[443/600][277] Loss_D: 0.13 Loss_G: 46.31 Loss_KL: 17.78 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[444/600][277] Loss_D: 0.60 Loss_G: 45.12 Loss_KL: 18.07 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[445/600][277] Loss_D: 0.79 Loss_G: 54.85 Loss_KL: 19.57 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.92s
+                                  
+[446/600][277] Loss_D: 0.30 Loss_G: 43.64 Loss_KL: 18.49 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.13s
+                                  
+[447/600][277] Loss_D: 0.25 Loss_G: 50.80 Loss_KL: 18.47 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[448/600][277] Loss_D: 0.12 Loss_G: 48.74 Loss_KL: 17.94 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.85s
+                                  
+[449/600][277] Loss_D: 0.31 Loss_G: 52.21 Loss_KL: 19.67 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.05s
+                                  
+[450/600][277] Loss_D: 0.13 Loss_G: 49.58 Loss_KL: 19.02 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.07s
+                                  
+Save G/Ds models.
+[451/600][277] Loss_D: 0.16 Loss_G: 50.29 Loss_KL: 20.87 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.18s
+                                  
+[452/600][277] Loss_D: 0.34 Loss_G: 46.48 Loss_KL: 21.31 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.88s
+                                  
+[453/600][277] Loss_D: 0.25 Loss_G: 42.61 Loss_KL: 18.85 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[454/600][277] Loss_D: 0.39 Loss_G: 39.71 Loss_KL: 19.84 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.15s
+                                  
+[455/600][277] Loss_D: 0.17 Loss_G: 63.99 Loss_KL: 20.19 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.95s
+                                  
+[456/600][277] Loss_D: 0.30 Loss_G: 46.22 Loss_KL: 18.25 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[457/600][277] Loss_D: 0.13 Loss_G: 45.82 Loss_KL: 19.17 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[458/600][277] Loss_D: 0.24 Loss_G: 57.00 Loss_KL: 19.90 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[459/600][277] Loss_D: 0.27 Loss_G: 51.53 Loss_KL: 18.10 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.84s
+                                  
+[460/600][277] Loss_D: 0.52 Loss_G: 50.28 Loss_KL: 18.80 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[461/600][277] Loss_D: 0.19 Loss_G: 58.64 Loss_KL: 19.72 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.21s
+                                  
+[462/600][277] Loss_D: 0.09 Loss_G: 62.96 Loss_KL: 20.69 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[463/600][277] Loss_D: 0.11 Loss_G: 72.44 Loss_KL: 19.73 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.86s
+                                  
+[464/600][277] Loss_D: 0.21 Loss_G: 46.81 Loss_KL: 19.61 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.15s
+                                  
+[465/600][277] Loss_D: 0.24 Loss_G: 42.05 Loss_KL: 19.01 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[466/600][277] Loss_D: 0.27 Loss_G: 47.18 Loss_KL: 20.03 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.94s
+                                  
+[467/600][277] Loss_D: 0.19 Loss_G: 63.35 Loss_KL: 18.36 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[468/600][277] Loss_D: 0.31 Loss_G: 47.28 Loss_KL: 19.36 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[469/600][277] Loss_D: 0.23 Loss_G: 50.02 Loss_KL: 20.36 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[470/600][277] Loss_D: 0.70 Loss_G: 61.69 Loss_KL: 19.81 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.78s
+                                  
+[471/600][277] Loss_D: 0.45 Loss_G: 49.59 Loss_KL: 19.37 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[472/600][277] Loss_D: 0.31 Loss_G: 61.52 Loss_KL: 20.01 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.13s
+                                  
+[473/600][277] Loss_D: 0.34 Loss_G: 39.56 Loss_KL: 19.65 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.91s
+                                  
+[474/600][277] Loss_D: 0.28 Loss_G: 39.81 Loss_KL: 20.02 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[475/600][277] Loss_D: 0.48 Loss_G: 40.13 Loss_KL: 18.51 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.25s
+                                  
+[476/600][277] Loss_D: 0.66 Loss_G: 60.17 Loss_KL: 18.95 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[477/600][277] Loss_D: 0.27 Loss_G: 45.98 Loss_KL: 18.71 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.87s
+                                  
+[478/600][277] Loss_D: 0.41 Loss_G: 40.17 Loss_KL: 17.60 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[479/600][277] Loss_D: 1.17 Loss_G: 56.06 Loss_KL: 20.00 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.07s
+                                  
+[480/600][277] Loss_D: 0.30 Loss_G: 48.50 Loss_KL: 19.15 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.12s
+                                  
+[481/600][277] Loss_D: 0.15 Loss_G: 47.82 Loss_KL: 20.84 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.79s
+                                  
+[482/600][277] Loss_D: 0.44 Loss_G: 43.72 Loss_KL: 18.76 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[483/600][277] Loss_D: 0.21 Loss_G: 49.83 Loss_KL: 19.13 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.14s
+                                  
+[484/600][277] Loss_D: 0.16 Loss_G: 50.61 Loss_KL: 19.91 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.93s
+                                  
+[485/600][277] Loss_D: 0.29 Loss_G: 48.51 Loss_KL: 20.32 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[486/600][277] Loss_D: 0.32 Loss_G: 45.24 Loss_KL: 19.22 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[487/600][277] Loss_D: 0.66 Loss_G: 42.17 Loss_KL: 18.82 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.15s
+                                  
+[488/600][277] Loss_D: 0.36 Loss_G: 46.75 Loss_KL: 20.11 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.90s
+                                  
+[489/600][277] Loss_D: 0.17 Loss_G: 61.12 Loss_KL: 17.62 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.10s
+                                  
+[490/600][277] Loss_D: 0.47 Loss_G: 42.38 Loss_KL: 19.37 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.13s
+                                  
+[491/600][277] Loss_D: 0.16 Loss_G: 51.50 Loss_KL: 18.33 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.86s
+                                  
+[492/600][277] Loss_D: 0.19 Loss_G: 54.10 Loss_KL: 20.07 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.18s
+                                  
+[493/600][277] Loss_D: 0.15 Loss_G: 44.34 Loss_KL: 19.38 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[494/600][277] Loss_D: 1.37 Loss_G: 54.71 Loss_KL: 18.60 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.11s
+                                  
+[495/600][277] Loss_D: 0.31 Loss_G: 65.31 Loss_KL: 18.16 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.87s
+                                  
+[496/600][277] Loss_D: 0.07 Loss_G: 57.11 Loss_KL: 18.44 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.13s
+                                  
+[497/600][277] Loss_D: 0.17 Loss_G: 53.90 Loss_KL: 18.20 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.09s
+                                  
+[498/600][277] Loss_D: 1.54 Loss_G: 61.52 Loss_KL: 19.29 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.07s
+                                  
+[499/600][277] Loss_D: 0.27 Loss_G: 47.30 Loss_KL: 18.66 lr_g: 0.00000020 lr_d: 0.00000001 Time: 65.85s
+                                  
+[500/600][277] Loss_D: 0.34 Loss_G: 44.89 Loss_KL: 19.88 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.12s
+                                  
+Save G/Ds models.
+[501/600][277] Loss_D: 0.30 Loss_G: 49.12 Loss_KL: 19.85 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.22s
+                                  
+[502/600][277] Loss_D: 0.26 Loss_G: 53.57 Loss_KL: 20.02 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.79s
+                                  
+[503/600][277] Loss_D: 1.02 Loss_G: 56.02 Loss_KL: 19.23 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.11s
+                                  
+[504/600][277] Loss_D: 1.23 Loss_G: 42.43 Loss_KL: 19.53 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.12s
+                                  
+[505/600][277] Loss_D: 0.43 Loss_G: 43.77 Loss_KL: 20.61 lr_g: 0.00000002 lr_d: 0.00000000 Time: 64.94s
+                                  
+[506/600][277] Loss_D: 0.35 Loss_G: 47.77 Loss_KL: 18.77 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.80s
+                                  
+[507/600][277] Loss_D: 1.77 Loss_G: 45.35 Loss_KL: 18.74 lr_g: 0.00000002 lr_d: 0.00000000 Time: 64.85s
+                                  
+[508/600][277] Loss_D: 0.11 Loss_G: 63.92 Loss_KL: 18.90 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.12s
+                                  
+[509/600][277] Loss_D: 0.15 Loss_G: 46.21 Loss_KL: 19.22 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.16s
+                                  
+[510/600][277] Loss_D: 0.19 Loss_G: 46.22 Loss_KL: 19.39 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.87s
+                                  
+[511/600][277] Loss_D: 0.51 Loss_G: 56.61 Loss_KL: 19.31 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.06s
+                                  
+[512/600][277] Loss_D: 0.60 Loss_G: 52.95 Loss_KL: 18.34 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.07s
+                                  
+[513/600][277] Loss_D: 0.27 Loss_G: 46.25 Loss_KL: 18.56 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.85s
+                                  
+[514/600][277] Loss_D: 0.23 Loss_G: 44.53 Loss_KL: 19.04 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.10s
+                                  
+[515/600][277] Loss_D: 0.90 Loss_G: 37.68 Loss_KL: 18.35 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.09s
+                                  
+[516/600][277] Loss_D: 0.60 Loss_G: 37.14 Loss_KL: 18.19 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.10s
+                                  
+[517/600][277] Loss_D: 0.17 Loss_G: 56.24 Loss_KL: 18.19 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.84s
+                                  
+[518/600][277] Loss_D: 0.18 Loss_G: 43.90 Loss_KL: 18.71 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.14s
+                                  
+[519/600][277] Loss_D: 0.15 Loss_G: 56.50 Loss_KL: 19.21 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.11s
+                                  
+[520/600][277] Loss_D: 0.54 Loss_G: 44.33 Loss_KL: 18.00 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.88s
+                                  
+[521/600][277] Loss_D: 0.97 Loss_G: 52.72 Loss_KL: 20.32 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.13s
+                                  
+[522/600][277] Loss_D: 0.46 Loss_G: 43.54 Loss_KL: 20.45 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.11s
+                                  
+[523/600][277] Loss_D: 0.36 Loss_G: 58.00 Loss_KL: 19.30 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.08s
+                                  
+[524/600][277] Loss_D: 0.83 Loss_G: 58.12 Loss_KL: 19.70 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.93s
+                                  
+[525/600][277] Loss_D: 0.19 Loss_G: 55.72 Loss_KL: 19.08 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.21s
+                                  
+[526/600][277] Loss_D: 0.25 Loss_G: 46.77 Loss_KL: 19.28 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.11s
+                                  
+[527/600][277] Loss_D: 0.26 Loss_G: 55.83 Loss_KL: 20.91 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.00s
+                                  
+[528/600][277] Loss_D: 0.29 Loss_G: 48.91 Loss_KL: 17.45 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.86s
+                                  
+[529/600][277] Loss_D: 0.30 Loss_G: 49.99 Loss_KL: 18.35 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.10s
+                                  
+[530/600][277] Loss_D: 0.17 Loss_G: 48.42 Loss_KL: 18.05 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.09s
+                                  
+[531/600][277] Loss_D: 0.36 Loss_G: 51.11 Loss_KL: 18.35 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.80s
+                                  
+[532/600][277] Loss_D: 0.39 Loss_G: 53.86 Loss_KL: 19.07 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.12s
+                                  
+[533/600][277] Loss_D: 0.27 Loss_G: 46.03 Loss_KL: 19.70 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.11s
+                                  
+[534/600][277] Loss_D: 0.42 Loss_G: 56.43 Loss_KL: 20.12 lr_g: 0.00000002 lr_d: 0.00000000 Time: 65.17s
+                                  
