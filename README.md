@@ -40,7 +40,7 @@ python test_worker.py
 * we use the first 10k training set due to limited computing resources, but we also do the experiment on the whole training set.
 * 3206 is  class_num of 10k training set &&  11003 is class_num of whole training set
 * the training on the whole train set (30k) is hard, model collapse may happen sometimes, we suggest you to finetune the parameter, e.g,  id_loss_rate.. or just re-train the model use the same parameter(I have tried, it is **useful**, emm..)
-* For the PIG-ID, you could just annotate the codes from line 297 to line 305 in HDGan/HDGan.py
+
 
 ### Acknowledgements
 
