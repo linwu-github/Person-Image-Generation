@@ -16,7 +16,7 @@
 * The 'reid_raw.json' is from https://github.com/ShuangLI59/Person-Search-with-Natural-Language-Description. This file can be used to split the train/val/test.
 * we use BERT embedding for the text embedding, you can also use char-CNN-RNN to get text embedding.[reedscot/icml2016](https://github.com/reedscot/icml2016)
 ### pretrain model
-* [BaiduYun](https://pan.baidu.com/s/1lxO0QRR23F-m3rmc5nSFYw) code: m2wu
+* [BaiduYun](https://pan.baidu.com/s/153f0fRoz0bHccZi29SHSVQ?pwd=f4kf)code: f4kf
 
 ### Train
 
